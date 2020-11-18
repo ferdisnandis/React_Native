@@ -1,16 +1,22 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
-import { Text, View, Button } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, {useState} from 'react';
+import { Text, View} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Home = () => {
+
+    const [token, setToken] = useState('');
+
+    const getToken = async () => {
+      setToken(await AsyncStorage.getItem('@jwt'));
+    }
+
+    useEffect(()=>{
+      getToken();
+    }, [])
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home</Text>
-        <Button
-        title="Login"
-        onPress={() => navigation.navigate('Login')}
-      />
       </View>
       );
     }
